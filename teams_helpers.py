@@ -9,13 +9,13 @@ def postQuotaViolations(url, quotaViolations, tenant):
         "@type": "MessageCard",
         "@context": "http://schema.org/extensions",
         "themeColor": "0076D7",
-        "summary": "Quota Violations",
+        "summary": "Quota Threshold Warning",
         "sections": [{
-            "activityTitle": "Quota Violations",
+            "activityTitle": "Quota Threshold Warning",
             "activitySubtitle": "on {0} tenant".format(tenant),
             "activityImage": "https://teamsnodesample.azurewebsites.net/static/img/image9.png",
             "facts": [{
-                "name": "Quota object in violation",
+                "name": "Object above threshold",
                 "value": "{0}".format(', '.join(quotaViolations))
             }],
             "markdown": "true"
