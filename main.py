@@ -1,10 +1,13 @@
 import os
 import logging
 
+from requests.api import post
+
 from volterra_helpers import createVoltSession, getQuota
 from quota_helpers import getQuotaViolations
+from teams_helpers import postQuotaViolations
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 
 def main():
@@ -36,6 +39,13 @@ def main():
             "The following quota objects are above the desired threshold:")
         for q in quotaViolations:
             logging.info(q)
+
+        # post to teams channel
+        webhookUrl = os.environ.get('TEAMS_WEBHOOK_URL', False)
+        if(webhookUrl):
+            postQuotaViolations(webhookUrl, quotaViolations,
+                                required_vars['VOLT_TENANT_NAME'])
+
     else:
         logging.info("No quota issues found")
 

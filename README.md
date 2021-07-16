@@ -17,3 +17,11 @@ The following environment variables are required:
 pip install requirements.txt
 python3 main.py
 ```
+
+# Teams Notifications
+
+If you would like a notice to be posted to a Microsoft Teams Channel you'll need to set the following environment variable:
+
+- TEAMS_WEBHOOK_URL: Webook URL supplied by Teams Connector Wizard
+
+For information on how to configure a Teams Webhook, check out the Microsoft teams [documentation](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook).
