@@ -12,8 +12,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 def main():
     # Ensure the required environment variables are set
-    required_vars = {'VOLT_TENANT_NAME': False,
-                     'VOLT_TENANT_API_TOKEN': False}
+    required_vars = {'VoltTenantName': False,
+                     'VoltTenantApiToken': False}
 
     for v in required_vars:
         required_vars[v] = os.environ.get(v, False)
@@ -23,7 +23,7 @@ def main():
 
     # create session for volterra API call
     session = createVoltSession(
-        required_vars['VOLT_TENANT_API_TOKEN'], required_vars['VOLT_TENANT_NAME'])
+        required_vars['VoltTenantApiToken'], required_vars['VoltTenantName'])
 
     # get quota
     quotas = getQuota("system", session)
@@ -41,10 +41,10 @@ def main():
             logging.info(q)
 
         # post to teams channel
-        webhookUrl = os.environ.get('TEAMS_WEBHOOK_URL', False)
+        webhookUrl = os.environ.get('TeamsWebhookUrl', False)
         if(webhookUrl):
             postQuotaViolations(webhookUrl, quotaViolations,
-                                required_vars['VOLT_TENANT_NAME'])
+                                required_vars['VoltTenantName'])
 
     else:
         logging.info("No quota issues found")

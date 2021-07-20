@@ -24,9 +24,9 @@ def createVoltSession(token=None, tenantName=None):
 def getQuota(namespace="system", s=None):
     url = s['urlBase'] + \
         "/api/web/namespaces/{0}/quota/usage".format(namespace)
-    try:
-        resp = s['session'].get(url)
-        resp.raise_for_status()
-        return resp.json()
-    except requests.exceptions.RequestException as e:
-        raise exceptions
+    # try:
+    resp = s['session'].get(url)
+    resp.raise_for_status()
+    return resp.json()
+    # except requests.exceptions.RequestException as e:
+    #     raise exceptions
