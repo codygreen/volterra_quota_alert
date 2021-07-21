@@ -131,3 +131,6 @@ local.settings.json
 
 # VS Code
 .vscode
+
+# Custom function configs
+*.function.sh

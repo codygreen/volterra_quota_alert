@@ -1,51 +1,3 @@
-# Volterra Quota Alert
-
-Alert if the Volterra tenant is reaching quota limitations. This script will query the Volterra system quota API and return any quota object that is above the desired threshold (90% by default).
-
-Note: The script does not return any quota object that has a limit less then 0 or equal to 1, such as OIDC provider.
-
-# Requirements
-
-The following environment variables are required:
-
-- VoltTenantName: Volterra Tenant Name
-- VoltTenantApiToken: Volterra API Token
-
-# Teams Notifications
-
-If you would like a notice to be posted to a Microsoft Teams Channel you'll need to set the following environment variable:
-
-- TeamsWebhookUrl: Webhook URL supplied by Teams Connector Wizard
-
-For information on how to configure a Teams Webhook, check out the Microsoft teams [documentation](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook).
-
-# Run
-
-```
-pip install requirements.txt
-python3 main.py
-```
-
-# Azure Function Deployment
-
-The VolterraQuotaAlerts folder contains an Azure Function to automate the alerts. The Azure Function is type _timerTrigger_ by default and you can customize the schedule to match your requirements.
-
-## Create Azure Resources
-
-The script below will create the following resource:
-
-- Resource Group
-- Storage Account
-- Key Vault and Key Vault Secrets
-- Function App
-
-Note: You'll need to ensure you have the Azure CLI installed and that you have logged in and selected the right subscription
-
-The variables will need to be set to your values.
-
-There is also an example script in the source code: _setup_azure_function.sh_
-
-```bash
 #!/bin/bash
 
 ## SET VARIABLES TO YOUR VALUES
@@ -61,7 +13,7 @@ keyVaultName=voltmgmt$postfix
 functionAppName=voltQuotaAlert$postfix
 
 # Create a resource group.
-az group create --name voltMgmt$postfix --location $region
+az group create --name $resourceGroupName --location $region
 
 # Create an Azure storage account in the resource group.
 az storage account create \
@@ -137,4 +89,3 @@ az functionapp config appsettings set \
     --name $functionAppName \
     --resource-group $resourceGroupName \
     --settings "TeamsWebhookUrl=@Microsoft.KeyVault(SecretUri=$teamsWebhookSecretUri)"
-```
